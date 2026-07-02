@@ -1,0 +1,49 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyd
+*.so
+.Python
+*.egg-info/
+dist/
+build/
+
+# Virtual environments
+.venv/
+venv/
+ENV/
+env/
+
+# Jupyter / notebooks
+.ipynb_checkpoints/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Environment files
+.env
+.env.*
+!.env.example
+
+# Streamlit
+.streamlit/secrets.toml
+
+# Data & model artifacts (do not commit)
+data/*
+!data/.gitkeep
+model/*
+!model/.gitkeep
+
+# Common generated outputs
+*.log
+*.tmp
+*.pkl
+*.joblib
+*.csv
+*.parquet
+*.png
+*.html
+
