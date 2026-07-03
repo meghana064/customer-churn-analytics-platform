@@ -1,5 +1,6 @@
 # Python
 __pycache__/
+*.pyc
 *.py[cod]
 *.pyd
 *.so
@@ -31,18 +32,9 @@ Thumbs.db
 # Streamlit
 .streamlit/secrets.toml
 
-# Data & model artifacts (do not commit)
-data/*
-!data/.gitkeep
-model/*
-!model/.gitkeep
-
 # Common generated outputs
 *.log
 *.tmp
-*.pkl
-*.joblib
-*.csv
 *.parquet
 *.png
 *.html
