@@ -296,10 +296,11 @@ def _render_history_filters_panel() -> None:
 
     date_row = st.columns([1.2, 1.5, 1, 1], gap="medium")
     with date_row[0]:
+        st.markdown('<div class="history-field-label">Filter by date</div>', unsafe_allow_html=True)
         st.checkbox(
-            "Filter by date",
+            "Enable date filter",
             key=HISTORY_FILTER_WIDGET_KEYS["use_date"],
-            label_visibility="visible",
+            label_visibility="collapsed",
         )
     with date_row[1]:
         st.date_input(

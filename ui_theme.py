@@ -442,6 +442,17 @@ def get_history_page_styles() -> str:
                 min-width: 9.5rem !important;
             }
 
+            .history-field-label {
+                color: #111827 !important;
+                font-size: 14px !important;
+                font-weight: 600 !important;
+                line-height: 1.35 !important;
+                margin: 0 0 0.45rem 0 !important;
+                white-space: nowrap !important;
+                word-break: keep-all !important;
+                overflow-wrap: normal !important;
+            }
+
             .history-filter-scope [data-testid="stCheckbox"] label,
             .history-filter-scope [data-testid="stCheckbox"] label p,
             .history-filter-scope [data-testid="stCheckbox"] [data-testid="stWidgetLabel"] p {
@@ -453,10 +464,13 @@ def get_history_page_styles() -> str:
 
             .history-filter-scope [data-testid="stCheckbox"] {
                 min-width: 9rem !important;
+                min-height: 40px !important;
+                display: flex !important;
+                align-items: center !important;
             }
 
             .history-filter-scope [data-testid="stButton"] {
-                margin-top: 1.65rem !important;
+                margin-top: 1.6rem !important;
             }
 
             .history-filter-scope [data-testid="stButton"] button {
