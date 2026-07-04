@@ -429,15 +429,39 @@ def get_history_page_styles() -> str:
         <style>
             .history-filter-scope [data-testid="stDateInput"] label,
             .history-filter-scope [data-testid="stDateInput"] [data-testid="stWidgetLabel"] {
-                white-space: normal !important;
+                white-space: nowrap !important;
+                word-break: keep-all !important;
+                overflow-wrap: normal !important;
             }
 
             .history-filter-scope [data-testid="stDateInput"] > div {
-                flex-wrap: wrap !important;
+                flex-wrap: nowrap !important;
             }
 
             .history-filter-scope [data-testid="stDateInput"] input {
                 min-width: 9.5rem !important;
+            }
+
+            .history-filter-scope [data-testid="stCheckbox"] label,
+            .history-filter-scope [data-testid="stCheckbox"] label p,
+            .history-filter-scope [data-testid="stCheckbox"] [data-testid="stWidgetLabel"] p {
+                white-space: nowrap !important;
+                word-break: keep-all !important;
+                overflow-wrap: normal !important;
+                line-height: 1.35 !important;
+            }
+
+            .history-filter-scope [data-testid="stCheckbox"] {
+                min-width: 9rem !important;
+            }
+
+            .history-filter-scope [data-testid="stButton"] {
+                margin-top: 1.65rem !important;
+            }
+
+            .history-filter-scope [data-testid="stButton"] button {
+                min-height: 40px !important;
+                width: 100% !important;
             }
 
             .history-filter-card-header {

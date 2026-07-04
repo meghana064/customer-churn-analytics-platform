@@ -261,7 +261,7 @@ def _render_history_filters_panel() -> None:
     """Render Search & Filters with a clean responsive grid."""
     render_history_filter_header()
 
-    filter_row = st.columns(4)
+    filter_row = st.columns([1.4, 1, 1, 1.4], gap="medium")
     with filter_row[0]:
         st.text_input(
             "Customer ID",
@@ -294,11 +294,12 @@ def _render_history_filters_panel() -> None:
             key=HISTORY_FILTER_WIDGET_KEYS["search_text"],
         )
 
-    date_row = st.columns([1.2, 2, 2])
+    date_row = st.columns([1.2, 1.5, 1, 1], gap="medium")
     with date_row[0]:
         st.checkbox(
             "Filter by date",
             key=HISTORY_FILTER_WIDGET_KEYS["use_date"],
+            label_visibility="visible",
         )
     with date_row[1]:
         st.date_input(
@@ -306,13 +307,11 @@ def _render_history_filters_panel() -> None:
             disabled=not st.session_state.get(HISTORY_FILTER_WIDGET_KEYS["use_date"], False),
             key=HISTORY_FILTER_WIDGET_KEYS["filter_date"],
         )
-
-    action_row = st.columns([1, 1, 2])
-    with action_row[0]:
+    with date_row[2]:
         if st.button("Apply Filters", type="primary", use_container_width=True, key="history_apply_filters"):
             st.session_state[HISTORY_APPLIED_FILTERS_KEY] = _capture_history_filters_from_widgets()
             st.rerun()
-    with action_row[1]:
+    with date_row[3]:
         if st.button("Reset Filters", type="secondary", use_container_width=True, key="history_reset_filters"):
             _reset_history_filter_widgets()
             st.rerun()
