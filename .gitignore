@@ -30,7 +30,6 @@ Thumbs.db
 !.env.example
 
 # Streamlit
-.streamlit/
 .streamlit/secrets.toml
 
 # Common generated outputs
