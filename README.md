@@ -15,6 +15,22 @@ The project is designed for final-year engineering demonstrations, internship po
 - Model evaluation page with performance metrics, confusion matrix, ROC curve, and model comparison.
 - Professional responsive UI with custom theme, cards, charts, navigation, and deployment-ready Streamlit config.
 
+## Architecture
+
+```text
+Streamlit UI (app.py)
+|-- UI theme and reusable components (ui_theme.py)
+|-- Single-customer prediction (predict.py)
+|-- Batch scoring and validation (batch_predict.py)
+|-- Session prediction history (prediction_history.py)
+|-- Executive analytics (executive_insights.py)
+|-- PDF reporting (pdf_report.py)
+|-- Data preprocessing and model training utilities (preprocess.py, train_model.py)
+|-- Local artifacts (data/, model/)
+```
+
+The deployed app uses local, repository-tracked model artifacts and dataset files. No external database, API key, or secret is required.
+
 ## Technologies Used
 
 - Python
@@ -32,8 +48,8 @@ The project is designed for final-year engineering demonstrations, internship po
 1. Clone the repository:
 
 ```bash
-git clone <your-repository-url>
-cd Customer-Churn-Prediction
+git clone https://github.com/meghana064/customer-churn-analytics-platform.git
+cd customer-churn-analytics-platform
 ```
 
 2. Create and activate a virtual environment:
@@ -85,6 +101,23 @@ The following files are required for the deployed app to work:
 - `ui_theme.py`
 - `.streamlit/config.toml`
 
+## Model Information
+
+- Trained model artifact: `model/churn_model.pkl`
+- Label encoder artifact: `model/label_encoders.pkl`
+- Training utility: `train_model.py`
+- Inference utility: `predict.py`
+- The app loads the saved model artifacts at runtime and does not retrain the model during deployment.
+- The current pipeline supports Logistic Regression, Decision Tree, and Random Forest evaluation, with the selected trained artifact persisted in `model/`.
+
+## Dataset
+
+- Dataset file: `data/Telco-Customer-Churn.csv`
+- Dataset type: IBM Telco Customer Churn-style customer subscription data
+- Target column: `Churn`
+- Identifier column: `customerID`
+- The dataset is required for executive dashboards, model evaluation, insights, and explainability pages.
+
 ## Streamlit Cloud Deployment
 
 1. Push this project to GitHub.
@@ -111,6 +144,14 @@ Add screenshots after deployment:
 - Executive Business Insights
 - Explainable AI
 - Model Evaluation
+
+## Future Improvements
+
+- Add automated UI regression tests for Streamlit pages.
+- Add CI checks for linting, import validation, and smoke tests.
+- Add model monitoring once live user data is connected.
+- Add optional authentication for production business use.
+- Add explainability methods such as SHAP if dependency size is acceptable for deployment.
 
 ## Folder Structure
 
@@ -151,4 +192,8 @@ Customer-Churn-Prediction/
 **Meghana Gowda M**
 
 Customer Churn Analytics Platform - machine learning, analytics, and Streamlit deployment project.
+
+## License
+
+This project is licensed under the terms included in `LICENSE`.
 

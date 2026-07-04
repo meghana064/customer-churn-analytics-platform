@@ -151,7 +151,6 @@ def apply_enterprise_plotly_theme(
 
 def render_plotly_chart(
     figure: Any,
-    use_container_width: bool = True,
     height: Optional[int] = None,
     hide_title: bool = False,
     key: Optional[str] = None,
@@ -159,7 +158,7 @@ def render_plotly_chart(
     """Render a Plotly chart with enterprise theme applied."""
     themed = apply_enterprise_plotly_theme(figure, height=height, hide_title=hide_title)
     kwargs: Dict[str, Any] = {
-        "use_container_width": use_container_width,
+        "width": "stretch",
         "config": PLOTLY_CHART_CONFIG,
     }
     if key is not None:
@@ -427,60 +426,36 @@ def get_history_page_styles() -> str:
     """Return CSS for the Customer Search & History page."""
     return """
         <style>
-            .history-filter-scope [data-testid="stDateInput"] label,
-            .history-filter-scope [data-testid="stDateInput"] [data-testid="stWidgetLabel"] {
+            .history-filter-scope [data-testid="stVerticalBlockBorderWrapper"] {
+                padding: 1.15rem 1.25rem 1.05rem 1.25rem !important;
+                border-radius: 16px !important;
+                box-shadow: 0 1px 3px rgba(15, 23, 42, 0.06) !important;
+            }
+
+            .history-filter-scope [data-testid="column"] {
+                min-width: 0 !important;
+            }
+
+            .history-filter-scope [data-testid="stWidgetLabel"] p {
                 white-space: nowrap !important;
                 word-break: keep-all !important;
                 overflow-wrap: normal !important;
-            }
-
-            .history-filter-scope [data-testid="stDateInput"] > div {
-                flex-wrap: nowrap !important;
-            }
-
-            .history-filter-scope [data-testid="stDateInput"] input {
-                min-width: 9.5rem !important;
-            }
-
-            .history-field-label {
-                color: #111827 !important;
-                font-size: 14px !important;
-                font-weight: 600 !important;
-                line-height: 1.35 !important;
-                margin: 0 0 0.45rem 0 !important;
-                white-space: nowrap !important;
-                word-break: keep-all !important;
-                overflow-wrap: normal !important;
-            }
-
-            .history-filter-scope [data-testid="stCheckbox"] label,
-            .history-filter-scope [data-testid="stCheckbox"] label p,
-            .history-filter-scope [data-testid="stCheckbox"] [data-testid="stWidgetLabel"] p {
-                white-space: nowrap !important;
-                word-break: keep-all !important;
-                overflow-wrap: normal !important;
-                line-height: 1.35 !important;
-            }
-
-            .history-filter-scope [data-testid="stCheckbox"] {
-                min-width: 9rem !important;
-                min-height: 40px !important;
-                display: flex !important;
-                align-items: center !important;
             }
 
             .history-filter-scope [data-testid="stButton"] {
-                margin-top: 1.6rem !important;
+                margin-top: 1.85rem !important;
+                margin-bottom: 0 !important;
             }
 
             .history-filter-scope [data-testid="stButton"] button {
-                min-height: 40px !important;
                 width: 100% !important;
+                border-radius: 10px !important;
+                font-weight: 600 !important;
             }
 
             .history-filter-card-header {
                 display: flex; align-items: center; gap: 0.6rem;
-                margin-bottom: 0.85rem; padding-bottom: 0.65rem;
+                margin-bottom: 0.9rem; padding-bottom: 0.7rem;
                 border-bottom: 1px solid #E5E7EB;
             }
 
@@ -505,7 +480,7 @@ def get_history_page_styles() -> str:
                 overflow: auto;
                 background: #FFFFFF;
                 box-shadow: 0 1px 3px rgba(15, 23, 42, 0.06);
-                margin-top: 0.35rem;
+                margin-top: 0.15rem;
             }
 
             .history-table {
@@ -614,6 +589,28 @@ def get_history_page_styles() -> str:
 
             .history-customer-profile-value {
                 font-size: 13px; font-weight: 600; color: #1F2937 !important;
+            }
+
+            .history-kpi-scope [data-testid="column"] {
+                min-width: 0 !important;
+            }
+
+            .history-kpi-scope .kpi-card {
+                min-height: 146px !important;
+                display: flex !important;
+                flex-direction: column !important;
+                justify-content: space-between !important;
+                border-radius: 16px !important;
+                box-shadow: 0 1px 4px rgba(15, 23, 42, 0.08) !important;
+            }
+
+            .history-page-active + div,
+            .history-filter-scope + div {
+                margin-top: 0 !important;
+            }
+
+            .history-filter-scope [data-testid="stHorizontalBlock"] {
+                row-gap: 0.75rem !important;
             }
 
             .danger-btn-marker + div[data-testid="stButton"] > button,
@@ -1023,23 +1020,8 @@ def get_app_styles() -> str:
             [data-testid="stTextInput"],
             [data-testid="stSelectbox"],
             [data-testid="stNumberInput"],
-            [data-testid="stDateInput"],
-            [data-testid="stCheckbox"],
             [data-testid="stSegmentedControl"] {
                 margin-bottom: 0.35rem !important;
-            }
-
-            .history-filter-scope [data-testid="stVerticalBlockBorderWrapper"] {
-                padding: 1.25rem !important;
-            }
-
-            .history-filter-scope [data-testid="column"] {
-                min-width: 0 !important;
-            }
-
-            .history-filter-scope [data-testid="stWidgetLabel"] p,
-            .history-filter-scope [data-testid="stWidgetLabel"] label {
-                white-space: normal !important;
             }
 
             .history-kpi-scope [data-testid="column"] {
@@ -1235,14 +1217,13 @@ def get_app_styles() -> str:
             /* ── Forms ── */
             .stTextInput > div > div,
             .stNumberInput > div > div,
-            .stDateInput > div > div,
             .stTextArea > div > div {
                 background-color: transparent !important;
                 border: none !important;
                 box-shadow: none !important;
             }
 
-            .stTextInput input, .stNumberInput input, .stDateInput input, .stTextArea textarea {
+            .stTextInput input, .stNumberInput input, .stTextArea textarea {
                 background-color: #FFFFFF !important;
                 color: #1F2937 !important;
                 border: 1px solid #CBD5E1 !important;
@@ -1252,7 +1233,7 @@ def get_app_styles() -> str:
             }
 
             .stTextInput input:focus, .stNumberInput input:focus,
-            .stDateInput input:focus, .stTextArea textarea:focus {
+            .stTextArea textarea:focus {
                 border-color: var(--color-primary) !important;
                 box-shadow: var(--shadow-glow) !important;
             }
@@ -1267,33 +1248,6 @@ def get_app_styles() -> str:
                 border-radius: 8px !important;
                 min-height: 42px;
                 box-shadow: none !important;
-            }
-
-            /* ── Checkboxes — visible check marks ── */
-            div[data-testid="stCheckbox"] label[data-baseweb="checkbox"],
-            .stCheckbox label[data-baseweb="checkbox"] {
-                background: transparent !important;
-            }
-
-            div[data-testid="stCheckbox"] label[data-baseweb="checkbox"] > div:first-of-type,
-            .stCheckbox label[data-baseweb="checkbox"] > div:first-of-type {
-                width: 18px !important;
-                height: 18px !important;
-                background: #FFFFFF !important;
-                border: 2px solid #94A3B8 !important;
-                border-radius: 4px !important;
-            }
-
-            div[data-testid="stCheckbox"] label[data-baseweb="checkbox"][aria-checked="true"] > div:first-of-type,
-            .stCheckbox label[data-baseweb="checkbox"][aria-checked="true"] > div:first-of-type {
-                background: #2563EB !important;
-                border-color: #1D4ED8 !important;
-            }
-
-            div[data-testid="stCheckbox"] [data-testid="stWidgetLabel"] p,
-            .stCheckbox [data-testid="stWidgetLabel"] p {
-                color: #374151 !important;
-                font-weight: 600 !important;
             }
 
             /* ── Segmented controls (No/Yes boolean fields) ── */
@@ -1982,7 +1936,7 @@ def render_sidebar_collapse_toggle() -> None:
         toggle_label,
         key="sidebar_collapse_toggle",
         help=toggle_help,
-        use_container_width=True,
+        width="stretch",
     ):
         st.session_state[SIDEBAR_COLLAPSED_KEY] = not collapsed
         st.rerun()
@@ -2002,7 +1956,7 @@ def render_sidebar_navigation() -> str:
         if st.button(
             button_label,
             key=f"nav_btn_{page_id}",
-            use_container_width=True,
+            width="stretch",
             type="primary" if is_active else "secondary",
             help=label if collapsed else None,
         ):
@@ -2228,7 +2182,7 @@ def render_empty_state(
         unsafe_allow_html=True,
     )
     if action_label and action_page:
-        if st.button(action_label, type="primary", use_container_width=True, key=f"empty_{action_page}"):
+        if st.button(action_label, type="primary", width="stretch", key=f"empty_{action_page}"):
             st.session_state[NAVIGATION_KEY] = action_page
             st.rerun()
 

@@ -294,26 +294,20 @@ def _render_history_filters_panel() -> None:
             key=HISTORY_FILTER_WIDGET_KEYS["search_text"],
         )
 
-    date_row = st.columns([1.2, 1.5, 1, 1], gap="medium")
+    date_row = st.columns([1.4, 1, 1, 1.4], gap="medium")
     with date_row[0]:
-        st.markdown('<div class="history-field-label">Filter by date</div>', unsafe_allow_html=True)
-        st.checkbox(
-            "Enable date filter",
-            key=HISTORY_FILTER_WIDGET_KEYS["use_date"],
-            label_visibility="collapsed",
-        )
-    with date_row[1]:
         st.date_input(
-            "Date",
-            disabled=not st.session_state.get(HISTORY_FILTER_WIDGET_KEYS["use_date"], False),
+            "Prediction Date",
             key=HISTORY_FILTER_WIDGET_KEYS["filter_date"],
         )
-    with date_row[2]:
-        if st.button("Apply Filters", type="primary", use_container_width=True, key="history_apply_filters"):
-            st.session_state[HISTORY_APPLIED_FILTERS_KEY] = _capture_history_filters_from_widgets()
+    with date_row[1]:
+        if st.button("Apply Filters", type="primary", width="stretch", key="history_apply_filters"):
+            applied = _capture_history_filters_from_widgets()
+            applied["use_date"] = True
+            st.session_state[HISTORY_APPLIED_FILTERS_KEY] = applied
             st.rerun()
-    with date_row[3]:
-        if st.button("Reset Filters", type="secondary", use_container_width=True, key="history_reset_filters"):
+    with date_row[2]:
+        if st.button("Reset Filters", type="secondary", width="stretch", key="history_reset_filters"):
             _reset_history_filter_widgets()
             st.rerun()
 
@@ -1338,7 +1332,7 @@ def create_pdf_download_button(
         file_name=file_name,
         mime="application/pdf",
         type="primary",
-        use_container_width=True,
+        width="stretch",
         key="download_pdf_report",
     )
 
@@ -2441,7 +2435,7 @@ def render_explainable_ai_page(model_loaded: bool) -> None:
     render_section_header("📋", "Feature Importance Table", "Ranked features with importance scores.")
     st.dataframe(
         build_feature_importance_table(importance_df),
-        use_container_width=True,
+        width="stretch",
         hide_index=True,
     )
 
@@ -3256,7 +3250,7 @@ def render_model_evaluation_page(model_loaded: bool) -> None:
         lambda row: highlight_best_model_row(row, best_model_name),
         axis=1,
     )
-    st.dataframe(styled_table, use_container_width=True, hide_index=True)
+    st.dataframe(styled_table, width="stretch", hide_index=True)
 
     render_business_interpretation(best_model_name, best_metrics)
 
@@ -3271,7 +3265,7 @@ def render_prediction_page(model_loaded: bool, error_message: Optional[str]) -> 
     predict_clicked = st.button(
         "Predict Customer Churn",
         type="primary",
-        use_container_width=True,
+        width="stretch",
         key="prediction_submit_btn",
     )
 
@@ -3371,7 +3365,7 @@ def render_batch_prediction_page(model_loaded: bool) -> None:
         render_kpi_card("Number of Columns", str(len(raw_df.columns)), icon="🧮")
 
     render_section_header("👁️", "Dataset Preview", "First 10 rows of the uploaded file.")
-    st.dataframe(raw_df.head(10), use_container_width=True, hide_index=True)
+    st.dataframe(raw_df.head(10), width="stretch", hide_index=True)
 
     validation = validate_batch_dataset(raw_df)
     if not validation["valid"]:
@@ -3451,7 +3445,7 @@ def render_batch_prediction_page(model_loaded: bool) -> None:
         ).any(axis=1)
         display_df = display_df[mask]
 
-    st.dataframe(display_df, use_container_width=True, hide_index=True)
+    st.dataframe(display_df, width="stretch", hide_index=True)
 
     render_section_header("📥", "Download Results", "Export batch predictions as CSV.")
     st.download_button(
@@ -3460,7 +3454,7 @@ def render_batch_prediction_page(model_loaded: bool) -> None:
         file_name=f"batch_prediction_results_{datetime.now().strftime('%Y%m%d_%H%M%S')}.csv",
         mime="text/csv",
         type="primary",
-        use_container_width=True,
+        width="stretch",
         key="download_batch_results",
     )
 
@@ -3628,7 +3622,7 @@ def render_prediction_history_page() -> None:
             file_name=f"prediction_history_{datetime.now().strftime('%Y%m%d_%H%M%S')}.csv",
             mime="text/csv",
             type="primary",
-            use_container_width=True,
+            width="stretch",
             key="download_prediction_history",
         )
 
@@ -3637,7 +3631,7 @@ def render_prediction_history_page() -> None:
         if st.button(
             "🗑 Clear Prediction History",
             type="secondary",
-            use_container_width=True,
+            width="stretch",
             key="clear_prediction_history_btn",
         ):
             st.session_state[HISTORY_CONFIRM_CLEAR_KEY] = True
@@ -3648,7 +3642,7 @@ def render_prediction_history_page() -> None:
         )
         confirm_col1, confirm_col2 = st.columns(2)
         with confirm_col1:
-            if st.button("Yes, clear history", type="primary", use_container_width=True):
+            if st.button("Yes, clear history", type="primary", width="stretch"):
                 st.session_state[PREDICTION_HISTORY_KEY] = clear_prediction_history()
                 st.session_state[HISTORY_CONFIRM_CLEAR_KEY] = False
                 st.session_state.pop(HISTORY_SELECTED_KEY, None)
@@ -3657,7 +3651,7 @@ def render_prediction_history_page() -> None:
                 st.success("Prediction history cleared.")
                 st.rerun()
         with confirm_col2:
-            if st.button("Cancel", type="secondary", use_container_width=True, key="cancel_clear_history"):
+            if st.button("Cancel", type="secondary", width="stretch", key="cancel_clear_history"):
                 st.session_state[HISTORY_CONFIRM_CLEAR_KEY] = False
                 st.rerun()
 
